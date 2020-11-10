@@ -49,7 +49,7 @@ class Strategy(object):
         self.notify_order(order)
         
     def logs(self, msg):
-        print(msg)
+        print("stratey log: "+msg)
 
     def set_instruments(self, instr):
         self.__instr__ = dict()
@@ -156,7 +156,7 @@ class Order(Enum):
 class OrderLimit(object):
     def __init__(self, px, qty, side, data=None, ordType=Order.Limit, id=None, replace_id=None):
         self.data = data
-        self.m_orderId = id if id else uuid.uuid1()
+        self.m_orderId = id if id else uuid.uuid1().__str__()
         self.price = px
         self.size = qty
         self.ordtype = side

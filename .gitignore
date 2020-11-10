@@ -9,3 +9,5 @@ bin/
 build/
 dist/
 src/arqLogger.egg-info/
+
+*.log

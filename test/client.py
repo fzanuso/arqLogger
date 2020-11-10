@@ -11,7 +11,7 @@ order.executed.exbits.append(Trade(order.price, 50))
 def start_client(param1=10, param2=20, param3="valor3"):
    params_list = locals()
    stgy = Strategy()
-   client = ArquantLogger("ws://3.13.71.66:8085/", stgy, "Testing", "bono usd vs ars", params_list)
+   client = ArquantLogger("ws://localhost:8001/", stgy, "Testing", "bono usd vs ars", params_list)
    client.connect()
 
    # MSG 1
@@ -32,7 +32,7 @@ def start_client(param1=10, param2=20, param3="valor3"):
    client.log_pause_event("description of pause", {"additional1": "strategy tasa 1", "additional2": 0})
    client.log_error_event("description of error", {"additional1": "strategy tasa 1", "additional2": 0})
 
-   time.sleep(5)
+   time.sleep(1000)
    client.close_connection()
 
 
