@@ -110,11 +110,10 @@ class ArquantLogger():
     def log_er_event(self, order, additional=None):
         self.event_id += 1
         try:
-            last_px = last_qty = None
+            last = []
             if order.executed.exbits:
-                last = list(order.executed.exbits)[-1]
-                last_px = last.price
-                last_qty = last.size
+                for l in list(order.executed.exbits):
+                    last.append({"px": l.price, "qty": l.size})
             self._append_log(EREventLog(-1,
                                         self.strategy_id,
                                         self.execution_id,
@@ -122,8 +121,7 @@ class ArquantLogger():
                                         self.event_id,
                                         order.m_orderId,
                                         self.get_order_status(order.status),
-                                        last_px,
-                                        last_qty,
+                                        last,
                                         order.executed.remsize,
                                         additional))
         except Exception as e:

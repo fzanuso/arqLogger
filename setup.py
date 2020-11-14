@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="arqLogger",
-    version="0.0.1b10",
+    version="0.0.1b11",
     author="Franco Zanuso",
     author_email="francozanuso89@gmail.com",
     description="Python websocket logger for Arquant's Strategies.",

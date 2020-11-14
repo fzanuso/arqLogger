@@ -74,12 +74,11 @@ class MDEventLog(EventLog):
 
 
 class EREventLog(EventLog):
-    def __init__(self, id, strategy_id, execution_id, client_id, event_id, order_id, state, last_px, last_qty, rem_size, additional):
+    def __init__(self, id, strategy_id, execution_id, client_id, event_id, order_id, state, last, rem_size, additional):
         super().__init__(id, strategy_id, execution_id, client_id, event_id, EventTypes.ExecReport.value, additional)
         self.order_id = order_id
         self.state = state
-        self.last_px = last_px
-        self.last_qty = last_qty
+        self.last = last
         self.rem_size = rem_size
 
 
