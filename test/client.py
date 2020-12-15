@@ -16,14 +16,14 @@ def start_client(param1=10, param2=20, param3="valor3"):
 
    # MSG 1
    client.log_strategy({"description": "Testing logging"})
-   time.sleep(2)
+   time.sleep(1)
    # MSG 2
    client.log_new_order_response(order, {"additional1": "strategy tasa 1", "additional2": 0})
    time.sleep(1)
    client.log_cancel_order_response(order, {"additional1": "strategy tasa 1", "additional2": 0})
    client.log_replace_order_response(order, {"additional1": "strategy tasa 1", "additional2": 0})
 
-   time.sleep(3)
+   time.sleep(20)
    # MSG 3
    client.log_md_event([data1, data2], [["bid_px", "bid_qty"], ["offer_px", "offer_qty"]], {"additional1": "strategy tasa 1", "additional2": 0})
    client.log_er_event(order, {"additional1": "strategy tasa 1", "additional2": 0})

@@ -25,6 +25,7 @@ class ArquantLogger():
         self.ws_thread = None
         self.schedTask = None
         self.connected = False
+        self.retry_connect = True
         self.strategy = strategy
         self.strategy_id = strategy_id
         self.client_id = client_id
@@ -47,7 +48,7 @@ class ArquantLogger():
 
         # Create a thread and target it to the run_forever function, then start it.
         self.ws_thread = threading.Thread(target=self.ws_connection.run_forever,
-                                          kwargs={"ping_interval": 270})
+                                          kwargs={"ping_interval": 5})
         self.ws_thread.start()
 
     def _start_logging(self):
@@ -76,14 +77,20 @@ class ArquantLogger():
     def _on_error(self, exception):
         self.strategy.logs("error during websocket connection: %s. "
                            "waiting %s sec until next retrying connecting." % (exception, self.retry_time))
+        self._retry_to_connect()
+
+    def _on_close(self):
+        self.strategy.logs("Websocket connection close. Retry connect: %s" % self.retry_connect)
+        self.connected = False
+        if self.retry_connect:
+            self._retry_to_connect()
+
+    def _retry_to_connect(self):
         time.sleep(self.retry_time)
         if not self.ws_connection.sock.connected:
             self.strategy.logs("retrying connecting nro: %s." % self.retry)
             self.retry += 1
             self.connect()
-
-    def _on_close(self):
-        self.connected = False
 
     def _on_open(self):
         self.connected = True
@@ -91,6 +98,7 @@ class ArquantLogger():
 
     def close_connection(self):
         if self.ws_connection.sock and self.ws_connection.sock.connected:
+            self.retry_connect = False
             self.ws_connection.close()
 
     def _append_log(self, log):
